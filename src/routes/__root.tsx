@@ -2,6 +2,7 @@
 import {
   HeadContent,
   Link,
+  LinkProps,
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router";
@@ -13,6 +14,12 @@ import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 import { HeaderDsfr } from "~/components/composants-dsfr/HeaderDSFR";
 import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
+
+declare module "@codegouvfr/react-dsfr/spa" {
+  interface RegisterLink {
+    Link: (props: LinkProps) => React.JSX.Element;
+  }
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -68,7 +75,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
-    startReactDsfr({ defaultColorScheme: "system" });
+    startReactDsfr({ defaultColorScheme: "system", Link: Link });
   }, []);
   return (
     <html>
@@ -93,7 +100,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           href="./node_modules/@codegouvfr/react-dsfr/favicon/manifest.webmanifest"
           crossOrigin="use-credentials"
         />
-
         <link
           rel="stylesheet"
           href="./node_modules/@codegouvfr/react-dsfr/main.css"

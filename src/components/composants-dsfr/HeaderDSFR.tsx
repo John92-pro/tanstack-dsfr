@@ -3,18 +3,15 @@ import { Header } from "@codegouvfr/react-dsfr/Header";
 const liens = [
   {
     linkProps: {
-      href: "#",
-      target: "_self",
+      to: "/accueil",
     },
-    text: "accès direct",
+    text: "Accueil",
   },
   {
-    isActive: true,
     linkProps: {
-      href: "#",
-      target: "_self",
+      to: "/administration",
     },
-    text: "accès direct",
+    text: "Administration",
   },
   {
     linkProps: {
