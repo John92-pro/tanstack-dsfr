@@ -1,45 +1,27 @@
-import { Header } from "@codegouvfr/react-dsfr/Header";
+import { Header, type HeaderProps } from "@codegouvfr/react-dsfr/Header";
 
-const liens = [
+type NavItems = NonNullable<HeaderProps["navigation"]>;
+
+const liens: NavItems = [
   {
-    linkProps: {
-      to: "/accueil",
-    },
+    linkProps: { to: "/accueil" },
     text: "Accueil",
   },
   {
-    linkProps: {
-      to: "/administration",
-    },
+    linkProps: { to: "/administration" },
     text: "Administration",
   },
   {
-    linkProps: {
-      href: "#",
-      target: "_self",
-    },
-    text: "accès direct",
-  },
-  {
-    linkProps: {
-      href: "#",
-      target: "_self",
-    },
+    linkProps: { href: "#", target: "_self" },
     text: "accès direct",
   },
 ];
 
-export const HeaderDsfr = () => {
-  return (
-    <Header
-      brandTop={"Ministere de la jsutice"}
-      homeLinkProps={{
-        href: "/",
-        title:
-          "Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)",
-      }}
-      serviceTitle="Application de trucs et machins"
-      navigation={liens}
-    />
-  );
-};
+export const HeaderDsfr = () => (
+  <Header
+    brandTop={"Ministère de la justice"}
+    homeLinkProps={{ href: "/", title: "Accueil" }}
+    serviceTitle="Application de trucs et machins"
+    navigation={liens}
+  />
+);

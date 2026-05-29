@@ -1,4 +1,7 @@
 /// <reference types="vite/client" />
+import "~/dsfr-init"; // ← en premier absolu
+import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
+import "@codegouvfr/react-dsfr/main.css";
 import {
   HeadContent,
   Link,
@@ -13,28 +16,23 @@ import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 import { HeaderDsfr } from "~/components/composants-dsfr/HeaderDSFR";
-import { startReactDsfr } from "@codegouvfr/react-dsfr/spa";
+import { setLink } from "@codegouvfr/react-dsfr/link";
 
-declare module "@codegouvfr/react-dsfr/spa" {
-  interface RegisterLink {
-    Link: (props: LinkProps) => React.JSX.Element;
-  }
+setLink({ Link }); // ← directement ici, avant tout le reste
+
+if (typeof window !== "undefined") {
+  startReactDsfr({ defaultColorScheme: "system" });
 }
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
       ...seo({
         title:
           "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        description: `TanStack Start is a type-safe, client-first, full-stack React framework.`,
       }),
     ],
     links: [
@@ -58,15 +56,8 @@ export const Route = createRootRoute({
       },
       { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
       { rel: "icon", href: "/favicon.ico" },
-
-      { rel: "stylesheet", href: appCss },
     ],
-    scripts: [
-      {
-        src: "/customScript.js",
-        type: "text/javascript",
-      },
-    ],
+    scripts: [{ src: "/customScript.js", type: "text/javascript" }],
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
@@ -74,87 +65,37 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  React.useEffect(() => {
-    startReactDsfr({ defaultColorScheme: "system", Link: Link });
-  }, []);
   return (
     <html>
       <head>
         <HeadContent />
-        <link
-          rel="apple-touch-icon"
-          href="./node_modules/@codegouvfr/react-dsfr/favicon/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          href="./node_modules/@codegouvfr/react-dsfr/favicon/favicon.svg"
-          type="image/svg+xml"
-        />
-        <link
-          rel="shortcut icon"
-          href="./node_modules/@codegouvfr/react-dsfr/favicon/favicon.ico"
-          type="image/x-icon"
-        />
-        <link
-          rel="manifest"
-          href="./node_modules/@codegouvfr/react-dsfr/favicon/manifest.webmanifest"
-          crossOrigin="use-credentials"
-        />
-        <link
-          rel="stylesheet"
-          href="./node_modules/@codegouvfr/react-dsfr/main.css"
-        />
       </head>
       <body>
         <HeaderDsfr />
         <div className="p-2 flex gap-2 text-lg">
           <Link
             to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
+            activeProps={{ className: "font-bold" }}
             activeOptions={{ exact: true }}
           >
             Home
           </Link>{" "}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
+          <Link to="/posts" activeProps={{ className: "font-bold" }}>
             Posts
           </Link>{" "}
-          <Link
-            to="/users"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
+          <Link to="/users" activeProps={{ className: "font-bold" }}>
             Users
           </Link>{" "}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
+          <Link to="/route-a" activeProps={{ className: "font-bold" }}>
             Pathless Layout
           </Link>{" "}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
+          <Link to="/deferred" activeProps={{ className: "font-bold" }}>
             Deferred
           </Link>{" "}
           <Link
             // @ts-expect-error
             to="/this-route-does-not-exist"
-            activeProps={{
-              className: "font-bold",
-            }}
+            activeProps={{ className: "font-bold" }}
           >
             This Route Does Not Exist
           </Link>

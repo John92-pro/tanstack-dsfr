@@ -25,4 +25,9 @@ export default defineConfig({
   optimizeDeps: {
     include: ["@codegouvfr/react-dsfr"],
   },
+  css: {
+    lightningcss: {
+      errorRecovery: true,
+    },
+  },
 });
